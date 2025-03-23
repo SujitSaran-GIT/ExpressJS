@@ -1,0 +1,21 @@
+Router In Express JS
+-------------------------
+1. Create routes folder andput your routes in a separate file
+2. Create instance of express.Router()
+3. Instead of app.method change it to router.method()
+4. Export router
+5. Import router
+6. app.use() is the built-in middleware & provide your routes
+
+
+Route Parameters
+-------------------
+app.params() -: Is used to add the callback trigger to the raw parameters and it is commonly used to check the existence of the data requested related to the same route param 
+
+Controllers In Express
+----------------------
+Controllers can group related request handling logic instead of defining all of your request handling logic as a callback or in a separate file. You may wish to organize this behaviour using something called Controllers.
+
+Query String
+---------------
+In Express.js, a query string is a part of a URL that contains key-value pairs used to send data from client to the server. It follows a ? in the URL and consists of multiple key-value pairs separated by &.
