@@ -4,6 +4,7 @@ import userRoutes from './routes/userRoutes.js'
 import teacherRoutes from './routes/teacherRoutes.js'
 import studentRoutes from './routes/studentRoutes.js'
 import products from './products.js'
+import userMiddleware from './middleware/userMiddleware.js'
 
 // Creating an instance of express
 const app = express()
@@ -178,6 +179,25 @@ app.get("/productlist",(req,res) => {
     res.json({
         products
     })
+})
+
+// MIDDLEWARE IN EXPRESS
+// -----------------------
+function userCredentials(req,res,next){
+    console.log("Name: SUJIT SARAN")
+    console.log("Email: sujitsaran16@gmail.com")
+    console.log("Password: Saran@2002")
+    console.log("Age: 18")
+    console.log("Course: MCA")
+    next()
+}
+
+app.get("/usercredential",userCredentials,(req,res)=>{
+    res.send("<h1>Admin Login</h1>")
+})
+
+app.get("/usermiddleware",userMiddleware,(req,res)=>{
+    res.send("<h1>Admin Login</h1>")
 })
 
 app.listen(8000, () => console.log("Server is running on port 8000"))

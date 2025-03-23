@@ -19,3 +19,175 @@ Controllers can group related request handling logic instead of defining all of 
 Query String
 ---------------
 In Express.js, a query string is a part of a URL that contains key-value pairs used to send data from client to the server. It follows a ? in the URL and consists of multiple key-value pairs separated by &.
+
+QUERY STRING IN EXPRESS
+--------------------------
+In Express.js, a query string is a part of a URL that contains key-value pairs used to send data to the server. It follows a ? in the URL and consists of multiple key-value pairs separated by &.
+
+📌 Example URL with Query String:
+--------------------------------------
+http://localhost:3000/users?name=John&age=25
+Here, the query parameters are:
+
+name=John
+
+age=25
+
+📌 Accessing Query Strings in Express.js
+--------------------------------------------
+1️⃣ Using req.query
+Express provides req.query to access query parameters as an object.
+
+import express from 'express';
+
+const app = express();
+
+app.get('/users', (req, res) => {
+    const name = req.query.name; // Get 'name' from query string
+    const age = req.query.age;   // Get 'age' from query string
+    res.send(`User: ${name}, Age: ${age}`);
+});
+
+app.listen(3000, () => console.log('Server running on port 3000'));
+✅ Example Request:
+
+GET http://localhost:3000/users?name=John&age=25
+✅ Response:
+
+User: John, Age: 25
+2️⃣ Using Query Strings with Default Values
+If a query parameter is not provided, you can set a default value:
+
+app.get('/users', (req, res) => {
+    const name = req.query.name || 'Guest'; 
+    res.send(`Hello, ${name}!`);
+});
+✅ Example Request:
+
+GET http://localhost:3000/users
+✅ Response:
+
+Hello, Guest!
+3️⃣ Handling Multiple Query Parameters
+If multiple values are passed for the same key, Express parses them into an array.
+
+✅ Example URL:
+
+GET http://localhost:3000/users?hobbies=reading&hobbies=traveling
+✅ Code:
+
+app.get('/users', (req, res) => {
+    const hobbies = req.query.hobbies; 
+    res.json({ hobbies });
+});
+✅ Response:
+
+{
+  "hobbies": ["reading", "traveling"]
+}
+🔥 Summary:
+req.query allows access to query parameters.
+
+Default values can be assigned if a parameter is missing.
+
+Arrays are automatically created for multiple values.
+
+Would you like an example of query string validation? 🚀
+
+
+MIDDLEWARE IN EXPRESS
+-------------------------
+
+🚀 Middleware in Express.js
+------------------------------
+Middleware functions in Express.js are functions that have access to the request (req), response (res), and the next middleware function (next) in the application’s request-response cycle.
+
+✅ Types of Middleware
+---------------------------
+1️⃣ Built-in Middleware (Included in Express)
+2️⃣ Third-party Middleware (Installed via npm)
+3️⃣ Application-level Middleware (Custom functions)
+4️⃣ Router-level Middleware (Specific to routes)
+5️⃣ Error-handling Middleware (Handles errors)
+
+🏆 1. Built-in Middleware
+---------------------------
+Express has some middleware included by default.
+
+Middleware	                            Description
+express.json()	                        Parses incoming JSON requests
+express.urlencoded({ extended: true })	Parses URL-encoded form data
+express.static('public')	            Serves static files like images, CSS, and JS
+✨ Example:
+
+import express from 'express';
+
+const app = express();
+
+// Built-in middleware
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static('public')); // Serves static files from 'public' folder
+
+app.post('/data', (req, res) => {
+    res.send(req.body);
+});
+
+app.listen(3000, () => console.log('Server running on port 3000'));
+🏆 2. Third-Party Middleware
+You can install middleware packages from npm.
+
+Example: CORS Middleware
+
+npm install cors
+
+import cors from 'cors';
+
+app.use(cors()); // Enables Cross-Origin Resource Sharing
+🏆 3. Application-Level Middleware (Custom Middleware)
+Middleware functions can perform logging, authentication, validation, and more.
+
+✨ Example: Custom Logger Middleware
+
+const logger = (req, res, next) => {
+    console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
+    next(); // Pass control to the next middleware
+};
+
+app.use(logger);
+🏆 4. Router-Level Middleware
+This middleware is attached to a specific router.
+
+import express from 'express';
+
+const router = express.Router();
+
+const checkAuth = (req, res, next) => {
+    console.log('Checking authentication...');
+    next();
+};
+
+router.use(checkAuth);
+
+router.get('/profile', (req, res) => {
+    res.send('User Profile');
+});
+
+app.use('/users', router);
+✅ Route: GET /users/profile
+
+🏆 5. Error-Handling Middleware
+Handles errors globally in Express.
+
+✨ Example:
+
+const errorHandler = (err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).send({ error: 'Something went wrong!' });
+};
+
+app.use(errorHandler);
+🔥 Key Takeaways
+✔ Middleware functions run before the route handler.
+✔ Use next() to move to the next middleware or route.
+✔ Order matters! Middleware is executed in the order it is defined.
