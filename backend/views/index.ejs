@@ -6,7 +6,36 @@
     <title>Home</title>
 </head>
 <body>
-    <h1>Home</h1>
-    <h4>This is my home page</h4>
+    <!-- Display Variable -->
+     <%= name %>
+     <%= 2+2 %>
+     <%= name.toLowerCase() %>
+
+    <!-- Conditional Rendering -->
+    <% if(id === 20){ %>
+        <h1>User Id: <%= id%></h1>
+    <% } %>
+
+    <!-- Else If Block -->
+    <% if(id === 10){ %>
+        <h1>User Id: <%= id%></h1>
+    <% } else if(id === 20) { %>
+        <h1>Name: <%= name%></h1>
+    <% } else { %>
+        <h1>Nothing....</h1>
+    <% } %>
+
+    <!-- Loops In EJS -->
+     <% for (let index = 1; index <= 100; index++) { %>
+        <h1>Value: <%=index%></h1>
+    <% } %>
+
+    <% const data = [1,2,3,4,5]  %>
+    <% for ( d in data) { %>
+        <h1>Data: <%=d%></h1>
+    <% } %>
+
+    <% var current = new Date() %>
+    <%= current %>
 </body>
 </html>

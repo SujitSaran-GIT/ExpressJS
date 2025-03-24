@@ -7,6 +7,7 @@ import products from './products.js'
 import userMiddleware from './middleware/userMiddleware.js'
 import ejsRoutes from './routes/ejsRoutes.js'
 import path, { join } from 'path'
+import bodyParser from 'body-parser'
 
 // Creating an instance of express
 const app = express()
@@ -218,5 +219,12 @@ app.set("view Engine","ejs")
 // app.use(express.static(join(process.cwd(),"public")))
 
 app.use("/ejs",ejsRoutes)
+
+// body-parser
+app.use(bodyParser.json())
+app.post("/post",(req,res) => {
+    const {name,age,course} = req.body
+    res.send(`${name}, ${age}, ${course}`)
+})
 
 app.listen(8000, () => console.log("Server is running on port 8000"))
