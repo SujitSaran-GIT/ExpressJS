@@ -5,6 +5,7 @@ import teacherRoutes from './routes/teacherRoutes.js'
 import studentRoutes from './routes/studentRoutes.js'
 import products from './products.js'
 import userMiddleware from './middleware/userMiddleware.js'
+import path from 'path'
 
 // Creating an instance of express
 const app = express()
@@ -198,6 +199,15 @@ app.get("/usercredential",userCredentials,(req,res)=>{
 
 app.get("/usermiddleware",userMiddleware,(req,res)=>{
     res.send("<h1>Admin Login</h1>")
+})
+
+// Serving Static Files In Express JS
+// -------------------------------------
+app.use(express.static('public'))
+// Built in middleware that serves our static files
+
+app.get('/path',(req,res) => {
+    res.sendFile(path.join(process.cwd(),'/public/index.html'))
 })
 
 app.listen(8000, () => console.log("Server is running on port 8000"))
