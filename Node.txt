@@ -191,3 +191,40 @@ app.use(errorHandler);
 ✔ Middleware functions run before the route handler.
 ✔ Use next() to move to the next middleware or route.
 ✔ Order matters! Middleware is executed in the order it is defined.
+
+Body Parser in Express.js
+---------------------------
+body-parser is a middleware used in Express.js to handle incoming request bodies, especially for POST and PUT requests. It helps parse JSON, URL-encoded, and raw data from the client.
+
+ Full Example Using JSON & URL-Encoded Parsing
+ ------------------------------------------------
+import express from 'express';
+
+const app = express();
+
+// Middleware
+app.use(express.json());  // For JSON data
+app.use(express.urlencoded({ extended: true }));  // For form data
+
+// Routes
+app.post('/json', (req, res) => {
+    res.json({ received: req.body });
+});
+
+app.post('/form', (req, res) => {
+    res.send(`Received form data: ${req.body.username}`);
+});
+
+app.listen(3000, () => console.log('Server running on port 3000'));
+
+Why Use extended: true in express.urlencoded()?
+-------------------------------------------------
+extended: false → Can parse only simple key-value pairs (like querystring library).
+
+extended: true → Can parse nested objects (like qs library).
+
+5. When to Use Body Parser?
+Data Type	                                                Middleware
+JSON (application/json)	                                    express.json()
+Form Data (application/x-www-form-urlencoded)	            express.urlencoded({ extended: true })
+File Uploads	                                            Use multer instead
