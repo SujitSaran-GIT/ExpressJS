@@ -5,7 +5,8 @@ import teacherRoutes from './routes/teacherRoutes.js'
 import studentRoutes from './routes/studentRoutes.js'
 import products from './products.js'
 import userMiddleware from './middleware/userMiddleware.js'
-import path from 'path'
+import ejsRoutes from './routes/ejsRoutes.js'
+import path, { join } from 'path'
 
 // Creating an instance of express
 const app = express()
@@ -209,5 +210,13 @@ app.use(express.static('public'))
 app.get('/path',(req,res) => {
     res.sendFile(path.join(process.cwd(),'/public/index.html'))
 })
+
+// EJS 
+app.set("view Engine","ejs")
+// app.set('views', '/views');
+// set() Method tells us that we are using EJS 
+// app.use(express.static(join(process.cwd(),"public")))
+
+app.use("/ejs",ejsRoutes)
 
 app.listen(8000, () => console.log("Server is running on port 8000"))
